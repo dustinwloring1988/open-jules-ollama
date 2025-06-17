@@ -9,7 +9,13 @@ interface AgentModels {
   developer: string;
   reviewer: string;
   prWriter: string;
-  generator: string;
+  generator:string;
+}
+
+interface OllamaModel {
+  name: string;
+  size: number;
+  // Add other properties if known, e.g., modified_at: string, digest: string
 }
 
 interface SettingsModalProps {
@@ -20,7 +26,7 @@ interface SettingsModalProps {
 }
 
 export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: SettingsModalProps) {
-  const [models, setModels] = useState<any[]>([]);
+  const [models, setModels] = useState<OllamaModel[]>([]);
   const [loading, setLoading] = useState(false);
   const [localModels, setLocalModels] = useState<AgentModels>(agentModels);
   const { theme, setTheme } = useTheme();

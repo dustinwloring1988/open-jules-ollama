@@ -5,7 +5,12 @@ interface StatusEntry {
   timestamp: string;
   status: 'info' | 'success' | 'error' | 'warning';
   message: string;
-  data?: any;
+  data?: unknown; // Consistent with App.tsx
+}
+
+interface ChangeDetail {
+  operation: string;
+  filePath: string;
 }
 
 interface StatusConsoleProps {
@@ -93,7 +98,7 @@ export function StatusConsole({ status }: StatusConsoleProps) {
                         <div className="bg-slate-800/50 rounded p-2 text-xs">
                           <strong>Files Modified:</strong>
                           <ul className="mt-1 space-y-1">
-                            {entry.data.changes.map((change: any, i: number) => (
+                            {(entry.data as { changes?: ChangeDetail[] })?.changes?.map((change: ChangeDetail, i: number) => (
                               <li key={i} className="flex items-center space-x-2">
                                 <span className={`px-2 py-0.5 rounded text-xs ${
                                   change.operation === 'create' ? 'bg-green-600' : 'bg-blue-600'
