@@ -217,6 +217,7 @@ function App() {
               </button>
             </div>
           </div>
+        </div>
 
           {/* Status Console */}
           <StatusConsole status={status} />
