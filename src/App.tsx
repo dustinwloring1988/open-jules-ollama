@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GitBranch, Settings, Play, Github, Zap, CheckCircle, XCircle, AlertCircle, ExternalLink } from 'lucide-react';
+import { Settings, Play, Github, Zap, CheckCircle, AlertCircle } from 'lucide-react';
 import { StatusConsole } from './components/StatusConsole';
 import { SettingsModal } from './components/SettingsModal';
 import { RepoSelector } from './components/RepoSelector';
@@ -18,7 +18,7 @@ interface StatusEntry {
   timestamp: string;
   status: 'info' | 'success' | 'error' | 'warning';
   message: string;
-  data?: any;
+  data?: unknown;
 }
 
 function App() {
@@ -48,8 +48,8 @@ function App() {
     if (savedModels) {
       try {
         setAgentModels(JSON.parse(savedModels));
-      } catch (e) {
-        console.error('Error parsing saved models:', e);
+      } catch (_e) {
+        console.error('Error parsing saved models:', _e);
       }
     }
   }, []);
@@ -103,17 +103,17 @@ function App() {
                 timestamp: new Date().toLocaleTimeString(),
                 ...data
               }]);
-            } catch (e: any) {
+            } catch {
               // Ignore malformed JSON
             }
           }
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       setStatus(prev => [...prev, {
         timestamp: new Date().toLocaleTimeString(),
         status: 'error',
-        message: `Connection error: ${error.message}`
+        message: `Connection error: ${(error as Error).message}`
       }]);
     } finally {
       setIsRunning(false);
