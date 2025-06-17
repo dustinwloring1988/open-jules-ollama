@@ -34,7 +34,13 @@ Be thorough but constructive in your review.`;
       // Read the actual file contents to review
       let changesContent = '';
       for (const change of changes) {
-        const filePath = path.join(repoPath, change.filePath);
+        const filePath = path.resolve(repoPath, change.filePath);
+        // Validate that the resolved path is within the repository root
+        if (!filePath.startsWith(repoPath)) {
+          changesContent += `\n=== ERROR READING: ${change.filePath} ===\n`;
+          changesContent += `Could not read file: Path resolves outside repository root\n`;
+          continue;
+        }
         try {
           const content = await fs.readFile(filePath, 'utf8');
           changesContent += `\n=== ${change.operation.toUpperCase()}: ${change.filePath} ===\n`;

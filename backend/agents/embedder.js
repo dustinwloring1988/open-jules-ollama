@@ -65,7 +65,11 @@ Please analyze this codebase and provide structured context that will help imple
           continue; // Skip hidden files except important ones
         }
 
-        const itemPath = path.join(repoPath, item);
+        const itemPath = path.resolve(repoPath, item);
+        // Validate that the resolved path is within the repository root
+        if (!itemPath.startsWith(repoPath)) {
+          continue; // Skip items outside the repoPath
+        }
         const stats = await fs.stat(itemPath);
         const indent = '  '.repeat(currentDepth);
 
@@ -97,7 +101,11 @@ Please analyze this codebase and provide structured context that will help imple
     let keyFilesInfo = '';
     
     for (const pattern of keyFilePatterns) {
-      const filePath = path.join(repoPath, pattern);
+      const filePath = path.resolve(repoPath, pattern);
+      // Validate that the resolved path is within the repository root
+      if (!filePath.startsWith(repoPath)) {
+        continue; // Skip files outside the repoPath
+      }
       try {
         if (await fs.pathExists(filePath)) {
           const content = await fs.readFile(filePath, 'utf8');
@@ -117,7 +125,10 @@ Please analyze this codebase and provide structured context that will help imple
     let packageInfo = '';
 
     // Check for package.json (Node.js)
-    const packageJsonPath = path.join(repoPath, 'package.json');
+    const packageJsonPath = path.resolve(repoPath, 'package.json');
+    if (!packageJsonPath.startsWith(repoPath)) {
+      return packageInfo || 'No package information found';
+    }
     if (await fs.pathExists(packageJsonPath)) {
       try {
         const packageJson = await fs.readJson(packageJsonPath);
@@ -130,7 +141,10 @@ Please analyze this codebase and provide structured context that will help imple
     }
 
     // Check for requirements.txt (Python)
-    const requirementsPath = path.join(repoPath, 'requirements.txt');
+    const requirementsPath = path.resolve(repoPath, 'requirements.txt');
+    if (!requirementsPath.startsWith(repoPath)) {
+      return packageInfo || 'No package information found';
+    }
     if (await fs.pathExists(requirementsPath)) {
       try {
         const requirements = await fs.readFile(requirementsPath, 'utf8');
