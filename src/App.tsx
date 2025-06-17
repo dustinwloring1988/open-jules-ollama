@@ -217,19 +217,21 @@ function App() {
               </button>
             </div>
           </div>
-        </div>
 
           {/* Status Console */}
-          <StatusConsole status={status} />
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+            <StatusConsole status={status} />
+          </div>
         </div>
 
-      {/* Settings Modal */}
-      <SettingsModal
-        isOpen={showSettings}
-        onClose={() => setShowSettings(false)}
-        agentModels={agentModels}
-        onModelsChange={(models: AgentModels) => setAgentModels(models)}
-      />
+        {/* Settings Modal */}
+        <SettingsModal
+          isOpen={showSettings}
+          onClose={() => setShowSettings(false)}
+          agentModels={agentModels}
+          onModelsChange={(models: AgentModels) => setAgentModels(models)}
+        />
+      </div>
     </div>
   );
 }
