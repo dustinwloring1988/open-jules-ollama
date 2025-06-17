@@ -36,7 +36,7 @@ function App() {
     developer: '',
     reviewer: '',
     prWriter: '',
-    generator: 'llama2'
+    generator: 'llama3'
   });
 
   // Load saved settings on component mount
@@ -131,8 +131,8 @@ function App() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-3">
-            <div className="p-3 bg-blue-600 rounded-xl">
-              <Zap className="w-8 h-8 text-white" />
+            <div className="p-3 rounded-xl">
+              <img src="/open-jules-logo.png" alt="Open Jules Logo" className="w-12 h-12" />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-white">Open Jules</h1>
