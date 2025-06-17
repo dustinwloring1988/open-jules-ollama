@@ -61,7 +61,7 @@ export function StatusConsole({ status }: StatusConsoleProps) {
 
       <div
         ref={consoleRef}
-        className="bg-slate-900/50 rounded-lg p-4 h-96 overflow-y-auto border border-slate-700 font-mono text-sm"
+        className="bg-slate-900/50 rounded-lg p-4 h-[500px] overflow-y-auto border border-slate-700 font-mono text-sm"
       >
         {status.length === 0 ? (
           <div className="flex items-center justify-center h-full text-slate-400">
