@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { GitBranch, Github, RefreshCw } from 'lucide-react';
 
 interface Repository {
@@ -36,27 +36,7 @@ export function RepoSelector({
   const [loadingRepos, setLoadingRepos] = useState(false);
   const [loadingBranches, setLoadingBranches] = useState(false);
 
-  useEffect(() => {
-    if (token) {
-      fetchRepositories();
-    } else {
-      setRepositories([]);
-      setBranches([]);
-      onRepoSelect('');
-      onBranchSelect('');
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (selectedRepo && token) {
-      fetchBranches();
-    } else {
-      setBranches([]);
-      onBranchSelect('');
-    }
-  }, [selectedRepo, token]);
-
-  const fetchRepositories = async () => {
+  const fetchRepositories = useCallback(async () => {
     setLoadingRepos(true);
     try {
       const response = await fetch('http://localhost:3001/api/repos', {
@@ -80,9 +60,9 @@ export function RepoSelector({
     } finally {
       setLoadingRepos(false);
     }
-  };
+  }, [token]);
 
-  const fetchBranches = async () => {
+  const fetchBranches = useCallback(async () => {
     if (!selectedRepo) return;
 
     setLoadingBranches(true);
@@ -117,7 +97,27 @@ export function RepoSelector({
     } finally {
       setLoadingBranches(false);
     }
-  };
+  }, [token, selectedRepo, selectedBranch, onBranchSelect]);
+
+  useEffect(() => {
+    if (token) {
+      fetchRepositories();
+    } else {
+      setRepositories([]);
+      setBranches([]);
+      onRepoSelect('');
+      onBranchSelect('');
+    }
+  }, [token, fetchRepositories, onRepoSelect, onBranchSelect]);
+
+  useEffect(() => {
+    if (selectedRepo && token) {
+      fetchBranches();
+    } else {
+      setBranches([]);
+      onBranchSelect('');
+    }
+  }, [selectedRepo, token, fetchBranches, onBranchSelect]);
 
   return (
     <div className="space-y-4">

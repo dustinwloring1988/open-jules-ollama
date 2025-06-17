@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, Play, Github, Zap, CheckCircle, AlertCircle } from 'lucide-react';
+import { Settings, Play, Github, Zap } from 'lucide-react';
 import { StatusConsole } from './components/StatusConsole';
 import { SettingsModal } from './components/SettingsModal';
 import { RepoSelector } from './components/RepoSelector';
