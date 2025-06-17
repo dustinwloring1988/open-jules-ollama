@@ -3,9 +3,9 @@
 
 ![Cover Image](public/cover.png)
 
-# Local AI GitHub Assistant (Open Jules Ollama)
+# Open Jules
 
-The Local AI GitHub Assistant (repository name: Open Jules Ollama) is a powerful web application designed to automate your GitHub coding workflow. It leverages a team of AI agents, powered by your local Ollama instance, to understand task descriptions, plan execution, implement code changes, review them, and automatically create pull requests. This tool streamlines the development process by handling repetitive tasks and providing a sophisticated AI-driven assistant for your projects.
+Open Jules is a powerful web application designed to automate your GitHub coding workflow. It leverages a team of AI agents, powered by your local Ollama instance, to understand task descriptions, plan execution, implement code changes, review them, and automatically create pull requests. This tool streamlines the development process by handling repetitive tasks and providing a sophisticated AI-driven assistant for your projects.
 
 ## Features
 
@@ -31,7 +31,7 @@ The Local AI GitHub Assistant (repository name: Open Jules Ollama) is a powerful
 
 ## Architecture Overview
 
-The Local AI GitHub Assistant operates with a client-server architecture, integrating with Ollama for AI capabilities and GitHub for repository management.
+The Open Jules operates with a client-server architecture, integrating with Ollama for AI capabilities and GitHub for repository management.
 
 *   **Frontend:** A React/TypeScript single-page application (SPA) built with Vite. It provides the user interface for:
     *   GitHub authentication (via Personal Access Token).
@@ -113,13 +113,13 @@ After installing the prerequisites, you'll need to configure the application its
 
 ## Installation and Running
 
-Follow these steps to get the Local AI GitHub Assistant up and running on your machine:
+Follow these steps to get the Open Jules up and running on your machine:
 
 1.  **Clone the Repository:**
     Open your terminal and run:
     ```bash
-    git clone https://github.com/dustinwloring1988/open-jules-ollama.git
-    cd open-jules-ollama
+    git clone https://github.com/open-jules/open-jules.git
+    cd open-jules
     ```
 
 2.  **Install Dependencies:**
@@ -201,10 +201,10 @@ Once the application is installed, running, and configured (see sections above),
 
 ## Project Structure
 
-Here's a brief overview of the key directories and files within the Open Jules Ollama project:
+Here's a brief overview of the key directories and files within the Open Jules project:
 
 ```
-open-jules-ollama/
+open-jules/
 ├── backend/                # Contains all backend Node.js/Express server code
 │   ├── agents/             # Logic for the specialized AI agents (Planner, Developer, Reviewer, etc.)
 │   │   ├── planner.js
