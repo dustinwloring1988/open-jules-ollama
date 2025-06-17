@@ -1,6 +1,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 
+![Cover Image](public/cover.png)
+
 # Local AI GitHub Assistant (Open Jules Ollama)
 
 The Local AI GitHub Assistant (repository name: Open Jules Ollama) is a powerful web application designed to automate your GitHub coding workflow. It leverages a team of AI agents, powered by your local Ollama instance, to understand task descriptions, plan execution, implement code changes, review them, and automatically create pull requests. This tool streamlines the development process by handling repetitive tasks and providing a sophisticated AI-driven assistant for your projects.
