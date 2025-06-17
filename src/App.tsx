@@ -135,7 +135,7 @@ function App() {
               <Zap className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">Local AI GitHub Assistant</h1>
+              <h1 className="text-3xl font-bold text-white">Open Jules</h1>
               <p className="text-blue-200">Multi-agent automation powered by Ollama</p>
             </div>
           </div>
