@@ -124,7 +124,7 @@ export function RepoSelector({
       {/* Repository Selection */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-blue-100">
+          <label htmlFor="repo-select" className="block text-sm font-medium text-blue-100">
             Repository
           </label>
           {token && (
@@ -140,6 +140,7 @@ export function RepoSelector({
         </div>
         
         <select
+          id="repo-select"
           value={selectedRepo}
           onChange={(e) => onRepoSelect(e.target.value)}
           disabled={!token || loadingRepos}
@@ -172,7 +173,7 @@ export function RepoSelector({
       {/* Branch Selection */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-blue-100">
+          <label htmlFor="branch-select" className="block text-sm font-medium text-blue-100">
             Base Branch
           </label>
           {selectedRepo && (
@@ -188,6 +189,7 @@ export function RepoSelector({
         </div>
         
         <select
+          id="branch-select"
           value={selectedBranch}
           onChange={(e) => onBranchSelect(e.target.value)}
           disabled={!selectedRepo || loadingBranches}
