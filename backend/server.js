@@ -73,6 +73,13 @@ app.post('/api/run-task', async (req, res) => {
     if (!token || !repo || !baseBranch || !task || !agentModels) {
       return res.status(400).json({ error: 'Missing required parameters' });
     }
+    
+    // Sanitize the repo parameter
+    const sanitizeFilename = require('sanitize-filename');
+    const sanitizedRepo = sanitizeFilename(repo);
+    if (!sanitizedRepo) {
+      return res.status(400).json({ error: 'Invalid repository name' });
+    }
 
     // Set up SSE for real-time updates
     res.writeHead(200, {

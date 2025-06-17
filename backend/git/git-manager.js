@@ -10,7 +10,11 @@ export class GitManager {
 
   async cloneRepository(token, owner, repo, baseBranch) {
     const repoUrl = `https://${token}@github.com/${owner}/${repo}.git`;
-    const repoPath = path.join(this.workspaceDir, repo);
+    let repoPath = path.join(this.workspaceDir, repo);
+    repoPath = path.resolve(repoPath);
+    if (!repoPath.startsWith(this.workspaceDir)) {
+      throw new Error('Repository path is outside the workspace directory');
+    }
 
     try {
       // Ensure workspace directory exists
