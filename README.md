@@ -3,248 +3,107 @@
 
 ![Cover Image](public/cover.png)
 
-# Open Jules
+# Open Jules: Your AI Coding Co-pilot 🚀
 
-Open Jules is a powerful web application designed to automate your GitHub coding workflow. It leverages a team of AI agents, powered by your local Ollama instance, to understand task descriptions, plan execution, implement code changes, review them, and automatically create pull requests. This tool streamlines the development process by handling repetitive tasks and providing a sophisticated AI-driven assistant for your projects.
+**Tired of the coding grind? Open Jules is here to help!**
 
-## Features
+Open Jules is a smart assistant that automates your GitHub workflow. Imagine describing a coding task, and Open Jules handles the rest – from planning and writing the code to creating a pull request, all powered by AI running locally on your machine. It's like having an AI pair programmer by your side, streamlining your development and letting you focus on the bigger picture.
 
--   **Multi-Agent AI Workflow:** Utilizes a team of specialized AI agents (Planner, Branch Namer, Embedder, Developer, Reviewer, PR Writer) to automate the full cycle of task completion, from understanding requirements to delivering a pull request.
--   **Local LLM Integration via Ollama:** Connects directly to your local Ollama instance, allowing you to use your preferred open-source language models, maintain data privacy, and customize AI capabilities.
--   **Comprehensive GitHub Automation:**
-    -   Intelligently names and creates new branches for tasks.
-    -   Clones the specified repository and checks out the base branch.
-    -   Contextually analyzes the existing codebase (Embedder agent).
-    -   Implements code changes as per the task and plan (Developer agent).
-    -   Reviews generated code for improvements and errors (Reviewer agent).
-    -   Commits changes with informative messages.
-    -   Pushes the new branch to the remote GitHub repository.
-    -   Generates detailed pull request titles and bodies (PR Writer agent).
-    -   Opens the pull request on GitHub.
--   **Real-time Task Monitoring:** Features a live status console that streams updates directly from the backend using Server-Sent Events (SSE), providing transparency into the ongoing processes.
--   **Flexible AI Model Configuration:** Through the in-app settings, users can assign different Ollama models to various agents (Planner, Developer, etc.), tailoring the AI's performance and characteristics to specific needs.
--   **Modern and Efficient Development Environment:**
-    -   Frontend: Built with React, TypeScript, and Vite for a responsive and type-safe user interface with a fast development server.
-    -   Backend: Powered by Node.js and Express.js for reliable and scalable server-side operations.
-    -   Styling: Utilizes TailwindCSS for a utility-first approach to a sleek and modern design.
-    -   Code Linting: Integrated ESLint for maintaining code quality and consistency.
+**Why Open Jules?**
+- **Automate Repetitive Tasks:** Say goodbye to boilerplate and routine coding.
+- **Boost Your Productivity:** Get more done, faster.
+- **Seamless GitHub Integration:** Works directly with your repositories.
+- **Powered by Local AI:** Uses your own Ollama instance for privacy and control.
 
-## Architecture Overview
+## Key Features - What Open Jules Does For You
 
-The Open Jules operates with a client-server architecture, integrating with Ollama for AI capabilities and GitHub for repository management.
+*   **Automated Coding from A to Z:** Describe your task, and Open Jules plans, codes, reviews, and prepares a GitHub Pull Request for you.
+*   **Your AI, Your Rules:** Runs with your local Ollama setup, giving you full control over your data and AI models.
+*   **Effortless GitHub Workflow:** From creating branches to crafting PR descriptions, Open Jules handles the Git gymnastics.
+*   **See the Magic Happen:** Watch the AI work its magic with a real-time progress log.
+*   **Tailor Your AI Team:** Easily assign different AI models (from your Ollama) to various tasks like planning or coding, optimizing for the best results.
+*   **Focus on What Matters:** Spend less time on routine coding and more on building great software.
 
-*   **Frontend:** A React/TypeScript single-page application (SPA) built with Vite. It provides the user interface for:
-    *   GitHub authentication (via Personal Access Token).
-    *   Repository and branch selection.
-    *   Task description input.
-    *   Configuration of Ollama models for different AI agents (via Settings).
-    *   Displaying real-time progress updates streamed from the backend.
+## Who is Open Jules For?
 
-*   **Backend:** An Express.js server (in `backend/server.js`) that:
-    *   Exposes APIs for the frontend.
-    *   Orchestrates the AI-driven tasks.
-    *   Manages interactions with `simple-git` (for local Git operations) and `octokit` (for GitHub API communication).
-    *   Coordinates a sequence of operations performed by specialized AI agents.
+Open Jules is a great fit for:
 
-*   **Ollama Integration:**
-    *   The backend communicates with a locally running Ollama instance (via `backend/services/ollama.js`).
-    *   This allows the application to utilize various open-source language models for different agent functionalities, ensuring data privacy and model customization.
+*   **Developers** looking to automate routine coding tasks and speed up their workflow.
+*   **Teams** wanting to streamline their development process and integrate AI assistance.
+*   **Open-source enthusiasts** eager to experiment with local AI models for code generation.
+*   **Anyone curious about AI-powered development** who wants a hands-on tool to explore.
 
-*   **AI Agents (located in `backend/agents/`):** The core logic of task automation is distributed among several agents, each powered by an Ollama model and with a specific role:
-    *   **PlannerAgent:** Deconstructs the user's high-level task into a structured, step-by-step plan.
-    *   **BranchNamingAgent:** Generates a concise and descriptive Git branch name based on the task.
-    *   **EmbedderAgent:** (If applicable for the task) Analyzes the existing codebase to create a contextual understanding for the DeveloperAgent.
-    *   **DeveloperAgent:** Implements the required code changes based on the plan and the codebase context provided by the EmbedderAgent.
-    *   **ReviewerAgent:** Reviews the code generated by the DeveloperAgent for quality, correctness, and potential improvements, suggesting changes if necessary.
-    *   **PRWriterAgent:** Drafts a comprehensive title and body for the pull request, summarizing the changes made.
+If you're comfortable with GitHub and running local applications, Open Jules can be a powerful addition to your toolkit!
 
-*   **Typical Workflow:**
-    1.  User configures settings (GitHub token, agent models) and submits a task through the frontend.
-    2.  The backend receives the task and initiates the multi-agent workflow.
-    3.  Agents, using models served by your local Ollama instance, perform their specialized functions sequentially:
-        *   Task Planning
-        *   Branch Naming
-        *   Repository Cloning & Branch Creation
-        *   Codebase Analysis (Embedding)
-        *   Code Implementation
-        *   Code Review & Refinement
-        *   Committing & Pushing Changes
-        *   Pull Request Content Generation
-        *   Pull Request Creation on GitHub
-    4.  Throughout this process, the backend streams status updates (using Server-Sent Events - SSE) to the frontend's console.
-    5.  The final output is a new branch with the implemented changes and an open pull request in the selected GitHub repository.
+## 🚀 Quick Start Guide
 
-## Prerequisites and Configuration
+Get Open Jules up and running in a few steps:
 
-Before you begin, ensure you have the following prerequisites installed and configured:
+1.  **Prerequisites:**
+    *   **Node.js:** Latest LTS version.
+    *   **Ollama:** Installed and running ([ollama.com](https://ollama.com/)). Make sure you've pulled some models (e.g., `ollama pull llama3`).
+    *   **Git:** Installed and in your PATH.
 
-1.  **Node.js:**
-    *   The latest Long-Term Support (LTS) version is recommended. You can download it from [nodejs.org](https://nodejs.org/).
-    *   `npm` (Node Package Manager) is included with Node.js.
-
-2.  **Ollama:**
-    *   Ollama must be installed and actively running on your local machine. You can download it from [ollama.com](https://ollama.com/).
-    *   **Pull Necessary Language Models:** The application relies on language models hosted by your Ollama instance. You will need to pull the models you intend to use for the different AI agents. This is done via the Ollama CLI. For example, to pull the `llama3` model:
-        ```bash
-        ollama pull llama3
-        ```
-        Repeat this for any other models you plan to assign to agents in the application's settings (e.g., `codellama`, `mistral`, etc.). Ensure these models are available locally before attempting to use them in the application.
-
-3.  **Git:**
-    *   The application uses Git for repository operations (cloning, branching, committing, pushing). Ensure Git is installed and accessible in your system's PATH. You can download it from [git-scm.com](https://git-scm.com/).
-
-### Application Configuration Steps
-
-After installing the prerequisites, you'll need to configure the application itself:
-
-1.  **GitHub Personal Access Token (PAT):**
-    *   To interact with your GitHub repositories (both private and public), the application requires a GitHub PAT.
-    *   You can generate a PAT from your GitHub account: Go to `Settings` > `Developer settings` > `Personal access tokens`.
-    *   **Recommended Scopes:**
-        *   For **Tokens (classic):** Select the `repo` scope. This provides comprehensive access to manage your repositories.
-        *   For **Fine-grained tokens:** Grant `Read and Write` permissions for `Contents` and `Pull requests`. You might also need `Metadata` (read-only) for repository discovery. Assign to specific repositories or all repositories as you see fit.
-    *   This token will be entered directly into the application's UI when you first use it or via the main configuration panel. It is stored in your browser's `localStorage` for convenience.
-
-2.  **Agent Model Selection (In-App Settings):**
-    *   Once the application is running (see "Installation and Running" below), click on the "Settings" button in the UI.
-    *   A modal will appear where you must specify which Ollama model each AI agent (e.g., Planner, Developer, Reviewer, Branch Namer, PR Writer, Embedder) should utilize.
-    *   **Crucial:** The model names you enter here (e.g., `llama3`, `codellama:7b`) must exactly match the names of models you have successfully pulled and are available in your local Ollama instance. If a specified model is not found by Ollama, the corresponding agent will fail.
-    *   The `generator` model listed in settings is a general-purpose model that can be used by agents like the Embedder for auxiliary generation tasks.
-
-## Installation and Running
-
-Follow these steps to get the Open Jules up and running on your machine:
-
-1.  **Clone the Repository:**
-    Open your terminal and run:
+2.  **Installation:**
     ```bash
     git clone https://github.com/open-jules/open-jules.git
     cd open-jules
-    ```
-
-2.  **Install Dependencies:**
-    This project uses `npm` for managing dependencies. Install them by running:
-    ```bash
     npm install
     ```
 
-3.  **Ensure Prerequisites are Met:**
-    *   Verify your Ollama instance is running (see "Prerequisites and Configuration").
-    *   Have your GitHub Personal Access Token ready to be entered into the application.
+3.  **Configuration:**
+    *   Launch the app (see step 4).
+    *   In the UI, go to **Settings**:
+        *   Enter your **GitHub Personal Access Token**.
+        *   Assign the **Ollama models** you've pulled to the different AI agents (Planner, Developer, etc.).
 
-4.  **Start the Development Servers:**
-    To start both the frontend (Vite) and backend (Express) servers concurrently, use:
+4.  **Run Open Jules:**
     ```bash
     npm run dev
     ```
-    *   The frontend application will typically be available at `http://localhost:5173` (this is the default port for Vite, check your terminal output for the exact URL).
-    *   The backend server will listen on `http://localhost:3001` (as defined in `backend/server.js`).
+    *   Access the app in your browser (usually `http://localhost:5173`).
 
-5.  **Access the Application:**
-    Once the servers are running, open your web browser and navigate to the frontend URL (usually `http://localhost:5173`). You can then proceed with the in-app configuration (GitHub token, agent models).
+For more detailed setup, troubleshooting, and advanced usage, please see our [Technical Details Guide](TECHNICAL_DETAILS.md).
 
-### Other Available Scripts
+## How to Use Open Jules
 
-For more granular control over the development process, you can use these scripts:
+Once you've followed the Quick Start Guide and have Open Jules running:
 
-*   `npm run frontend`: Starts only the Vite development server for the frontend.
-*   `npm run server`: Starts only the Node.js/Express backend server.
-*   `npm run build`: Compiles and bundles the React frontend for production. The output is typically placed in a `dist` folder.
-*   `npm run preview`: Serves the production build locally, allowing you to test the optimized version before deployment.
-*   `npm run lint`: Runs ESLint across the project to check for code style issues and potential errors.
+1.  **Select Your Repository & Branch:**
+    *   Choose the GitHub repository you want to work on.
+    *   Pick the base branch for your changes.
 
-## How to Use
+2.  **Describe Your Task:**
+    *   In the "Task Description" area, clearly explain what you want Open Jules to do.
+    *   *Be specific!* For example, instead of "fix bug," try "Refactor `src/utils.js` to use arrow functions and add a unit test for the `calculateTotal` function."
 
-Once the application is installed, running, and configured (see sections above), follow these steps to automate a coding task:
+3.  **Run the Task:**
+    *   Click "Run Task."
 
-1.  **Access the Application:**
-    *   Open your web browser and navigate to the frontend URL (typically `http://localhost:5173`).
+4.  **Monitor Progress:**
+    *   Watch the live status console to see the AI agents (Planner, Developer, etc.) at work.
 
-2.  **Initial Configuration (if not done yet):**
-    *   **GitHub Token:** If you haven't already, input your GitHub Personal Access Token in the designated field on the main page (usually labeled "GitHub Personal Access Token"). This is crucial for the application to access and manage your repositories.
-    *   **Agent Models (Settings):**
-        *   Click the "Settings" button (often represented by a gear icon or explicitly labeled).
-        *   In the Settings modal, you must assign a locally available Ollama model to each listed AI agent (e.g., Planner, Branch Namer, Embedder, Developer, Reviewer, PR Writer).
-        *   *Example:* You might assign `llama3` to the Planner and `codellama:13b` to the Developer. (Note: Model names must match exactly how they are listed in your local Ollama instance - use `ollama list` in your terminal to confirm the correct names).
-        *   Ensure all required agent models are configured. The application will indicate if models are missing.
-        *   Save your settings.
-
-3.  **Select Target Repository and Base Branch:**
-    *   Using the dropdown menus provided on the main page:
-        *   Choose the GitHub repository you wish to work on from the list of your available repositories.
-        *   Select the base branch from which your new task-specific branch will be created and against which the pull request will eventually be made.
-
-4.  **Describe Your Coding Task:**
-    *   In the "Task Description" text area, clearly and comprehensively explain the coding task you want the AI agents to perform. The more specific and detailed your instructions, the better the AI will be able to interpret and execute the task.
-        *   *Good example:* "Refactor the `getUserData` function located in `src/api/user.js` to use `async/await` syntax instead of chained `.then()` promises. Also, ensure all parameters in this function have JSDoc comments."
-        *   *Less effective example:* "Fix some bugs in the user module."
-
-5.  **Initiate the Task:**
-    *   Click the "Run Task" button.
-    *   The application will now begin the automated workflow, orchestrating the various AI agents.
-
-6.  **Monitor Real-Time Progress:**
-    *   Keep an eye on the "Status Console" (or similarly named panel), typically located on the right side of the screen or below the main controls.
-    *   This console will display live updates as each agent performs its part of the job (e.g., "Planning task decomposition...", "Generating branch name...", "Cloning repository...", "Implementing changes...", "Reviewing changes...", "Creating pull request...").
-    *   The UI may also provide visual cues for the status of each agent (e.g., in the agent status cards usually found at the bottom of the page).
-
-7.  **Review the Generated Pull Request:**
-    *   Once all agents have completed their tasks successfully, the status console will indicate completion and should provide a direct link (or the PR number and repository details) to the newly created pull request on GitHub.
-    *   Navigate to this pull request on GitHub. Carefully review the code changes made by the AI, test the functionality, read the PR description, and if everything is satisfactory, merge it.
+5.  **Review Your PR:**
+    *   Once complete, Open Jules will provide a link to the pull request on GitHub.
+    *   Review the AI-generated code, test it, and merge if satisfied!
 
 **Tips for Best Results:**
 
-*   **Clarity is Key:** Provide clear, specific, and unambiguous task descriptions.
-*   **Model Selection Matters:** Experiment with different Ollama models for various agents. Some models excel at coding, others at planning or summarization. The choice can significantly impact the quality of the output.
-*   **Iterate on Complex Tasks:** For very large or complex changes, consider breaking them down into smaller, more manageable sub-tasks and running the assistant for each one. This can lead to more predictable and higher-quality results.
-*   **Check Ollama Logs:** If you encounter issues, particularly with model loading or performance, checking the logs from your Ollama instance can provide valuable insights.
+*   **Clear Instructions:** The more detailed your task description, the better the outcome.
+*   **Model Choice:** Experiment with different Ollama models for agents (in Settings) to find what works best.
+*   **Complex Tasks:** Break down large tasks into smaller, manageable steps for Open Jules.
+*   Need more details on setup or advanced options? Check the [Technical Details Guide](TECHNICAL_DETAILS.md).
 
-## Project Structure
+## Diving Deeper
 
-Here's a brief overview of the key directories and files within the Open Jules project:
+Want to understand the nuts and bolts of Open Jules? For detailed information on:
 
-```
-open-jules/
-├── backend/                # Contains all backend Node.js/Express server code
-│   ├── agents/             # Logic for the specialized AI agents (Planner, Developer, Reviewer, etc.)
-│   │   ├── planner.js
-│   │   ├── developer.js
-│   │   └── ... (other agent files)
-│   ├── git/                # `GitManager` class for abstracting `simple-git` operations
-│   │   └── git-manager.js
-│   ├── github/             # `GitHubManager` class for `octokit` interactions with the GitHub API
-│   │   └── github-manager.js
-│   ├── services/           # External service integrations, primarily Ollama
-│   │   └── ollama.js
-│   └── server.js           # Main entry point for the Express backend server, defines API routes.
-│
-├── public/                 # Static assets served directly (e.g., favicon, initial `index.html` for Vite)
-│
-├── src/                    # Frontend React/TypeScript application source code (managed by Vite)
-│   ├── components/         # Reusable UI components (e.g., RepoSelector, SettingsModal, StatusConsole)
-│   │   ├── RepoSelector.tsx
-│   │   └── ... (other component files)
-│   ├── App.tsx             # The main root component of the React application.
-│   ├── main.tsx            # The entry point for the React application, renders App.tsx.
-│   ├── index.css           # Global styles and TailwindCSS base directives.
-│   └── vite-env.d.ts       # TypeScript definitions for Vite environment variables.
-│
-├── .gitignore              # Specifies intentionally untracked files that Git should ignore.
-├── CONTRIBUTING.md         # Guidelines for contributing to the project.
-├── eslint.config.js        # ESLint configuration file.
-├── LICENSE                 # Contains the MIT License text.
-├── package.json            # Lists project dependencies, scripts (npm run dev, etc.), and metadata.
-├── package-lock.json       # Records exact versions of dependencies.
-├── postcss.config.js       # Configuration for PostCSS (used with TailwindCSS).
-├── README.md               # This file: project documentation.
-├── tailwind.config.js      # Configuration for TailwindCSS.
-├── tsconfig.json           # TypeScript compiler options for the project.
-├── tsconfig.app.json       # TypeScript compiler options specific to the frontend app.
-├── tsconfig.node.json      # TypeScript compiler options specific to the backend (if it were TS).
-└── vite.config.ts          # Configuration file for Vite (frontend build tool).
-```
+*   Advanced configuration options
+*   The system architecture
+*   Project structure and codebase layout
+*   Troubleshooting tips
 
-This structure clearly separates the backend logic (handling AI, Git, GitHub operations) from the frontend user interface. The AI agent implementations are modular within the `backend/agents/` directory.
+Please refer to our [Technical Details Guide](TECHNICAL_DETAILS.md).
 
 ## Contributing
 
