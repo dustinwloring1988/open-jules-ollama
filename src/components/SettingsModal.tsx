@@ -25,6 +25,10 @@ export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: 
   const [localModels, setLocalModels] = useState<AgentModels>(agentModels);
   const { theme, setTheme } = useTheme();
 
+  useEffect(() => {
+    setLocalModels(agentModels);
+  }, [agentModels]);
+
   const agentInfo: { [key: string]: { name: string; description: string; icon: string } } = {
     planner: {
       name: 'Planner Agent',
@@ -103,7 +107,7 @@ export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: 
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border border-slate-700">
+      <div className="bg-slate-800 rounded-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden border border-slate-700">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-700">
           <div className="flex items-center space-x-3">
@@ -123,6 +127,14 @@ export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: 
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
               <span>Refresh</span>
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={!Object.values(localModels).every(Boolean)}
+              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 rounded-lg text-white transition-colors disabled:cursor-not-allowed font-medium"
+            >
+              <Save className="w-4 h-4" />
+              <span>Save</span>
             </button>
             <button
               onClick={onClose}
@@ -199,7 +211,7 @@ export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: 
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between p-6 border-t border-slate-700">
+        <div className="flex items-center justify-between p-6 border-t border-slate-700 bg-slate-800/50">
           <div className="text-sm text-slate-400">
             {Object.values(localModels).filter(Boolean).length} / {Object.keys(agentInfo).length} agents configured
           </div>
@@ -209,14 +221,6 @@ export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: 
               className="px-4 py-2 text-slate-400 hover:text-white transition-colors"
             >
               Cancel
-            </button>
-            <button
-              onClick={handleSave}
-              disabled={!Object.values(localModels).every(Boolean)}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 rounded-lg text-white transition-colors disabled:cursor-not-allowed"
-            >
-              <Save className="w-4 h-4" />
-              <span>Save Configuration</span>
             </button>
           </div>
         </div>
