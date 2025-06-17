@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, RefreshCw, Save, Bot } from 'lucide-react';
-import { useTheme } from './theme-provider';
+import { useTheme } from '../hooks/use-theme';
 
 interface AgentModels {
   planner: string;
