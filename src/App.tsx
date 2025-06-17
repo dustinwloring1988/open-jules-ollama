@@ -222,33 +222,6 @@ function App() {
           <StatusConsole status={status} />
         </div>
 
-        {/* Agent Status Cards */}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {Object.entries({
-            planner: 'Planner',
-            branchNamer: 'Branch Namer',
-            embedder: 'Embedder',
-            developer: 'Developer',
-            reviewer: 'Reviewer',
-            prWriter: 'PR Writer'
-          }).map(([key, name]) => (
-            <div key={key} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-medium text-white">{name}</h3>
-                {agentModels[key as keyof AgentModels] ? (
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                ) : (
-                  <AlertCircle className="w-4 h-4 text-orange-400" />
-                )}
-              </div>
-              <p className="text-xs text-blue-200 truncate">
-                {agentModels[key as keyof AgentModels] || 'Not configured'}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Settings Modal */}
       <SettingsModal
         isOpen={showSettings}
