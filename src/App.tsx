@@ -157,23 +157,6 @@ function App() {
             </h2>
 
             <div className="space-y-6">
-              {/* GitHub Token */}
-              <div>
-                <label className="block text-sm font-medium text-blue-100 mb-2">
-                  GitHub Personal Access Token
-                </label>
-                <input
-                  type="password"
-                  value={githubToken}
-                  onChange={(e) => handleTokenSave(e.target.value)}
-                  placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <p className="text-xs text-blue-200 mt-1">
-                  Requires 'repo' scope for full functionality
-                </p>
-              </div>
-
               {/* Repository Selector */}
               <RepoSelector
                 token={githubToken}
@@ -230,6 +213,8 @@ function App() {
           onClose={() => setShowSettings(false)}
           agentModels={agentModels}
           onModelsChange={(models: AgentModels) => setAgentModels(models)}
+          githubToken={githubToken}
+          onTokenChange={handleTokenSave}
         />
       </div>
     </div>

@@ -23,9 +23,18 @@ interface SettingsModalProps {
   onClose: () => void;
   agentModels: AgentModels;
   onModelsChange: (models: AgentModels) => void;
+  githubToken: string;
+  onTokenChange: (token: string) => void;
 }
 
-export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: SettingsModalProps) {
+export function SettingsModal({ 
+  isOpen, 
+  onClose, 
+  agentModels, 
+  onModelsChange,
+  githubToken,
+  onTokenChange 
+}: SettingsModalProps) {
   const [models, setModels] = useState<OllamaModel[]>([]);
   const [loading, setLoading] = useState(false);
   const [localModels, setLocalModels] = useState<AgentModels>(agentModels);
@@ -121,8 +130,8 @@ export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: 
               <Bot className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-white">Agent Configuration</h2>
-              <p className="text-slate-400">Configure Ollama models for each AI agent</p>
+              <h2 className="text-xl font-semibold text-white">Settings</h2>
+              <p className="text-slate-400">Configure your application settings</p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -152,68 +161,105 @@ export function SettingsModal({ isOpen, onClose, agentModels, onModelsChange }: 
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
-          {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full"></div>
-              <span className="ml-3 text-slate-400">Loading models from Ollama...</span>
-            </div>
-          ) : models.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-slate-400 mb-4">
-                <Bot className="w-12 h-12 mx-auto mb-2" />
-                <p>No models found</p>
-                <p className="text-sm">Make sure Ollama is running on localhost:11434</p>
+        <div className="p-6 overflow-y-auto max-h-[calc(85vh-8rem)]">
+          {/* GitHub Token Section */}
+          <div className="mb-8">
+            <div className="flex items-center space-x-3 mb-3">
+              <span className="text-2xl">🔑</span>
+              <div>
+                <h3 className="font-semibold text-white">GitHub Configuration</h3>
+                <p className="text-sm text-slate-400">Set up your GitHub Personal Access Token</p>
               </div>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {Object.entries(agentInfo).map(([key, info]) => (
-                <div key={key} className="bg-slate-900/50 rounded-xl p-4 border border-slate-700">
+            <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-700">
+              <label className="block text-sm font-medium text-blue-100 mb-2">
+                GitHub Personal Access Token
+              </label>
+              <input
+                type="password"
+                value={githubToken}
+                onChange={(e) => onTokenChange(e.target.value)}
+                placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <p className="text-xs text-blue-200 mt-1">
+                Requires 'repo' scope for full functionality
+              </p>
+            </div>
+          </div>
+
+          {/* Agent Models Section */}
+          <div>
+            <div className="flex items-center space-x-3 mb-3">
+              <span className="text-2xl">🤖</span>
+              <div>
+                <h3 className="font-semibold text-white">Agent Configuration</h3>
+                <p className="text-sm text-slate-400">Configure Ollama models for each AI agent</p>
+              </div>
+            </div>
+
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="animate-spin w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full"></div>
+                <span className="ml-3 text-slate-400">Loading models from Ollama...</span>
+              </div>
+            ) : models.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-slate-400 mb-4">
+                  <Bot className="w-12 h-12 mx-auto mb-2" />
+                  <p>No models found</p>
+                  <p className="text-sm">Make sure Ollama is running on localhost:11434</p>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {Object.entries(agentInfo).map(([key, info]) => (
+                  <div key={key} className="bg-slate-900/50 rounded-xl p-4 border border-slate-700">
+                    <div className="flex items-center space-x-3 mb-3">
+                      <span className="text-2xl">{info.icon}</span>
+                      <div>
+                        <h3 className="font-semibold text-white">{info.name}</h3>
+                        <p className="text-sm text-slate-400">{info.description}</p>
+                      </div>
+                    </div>
+                    
+                    <select
+                      value={localModels[key as keyof AgentModels] || ''}
+                      onChange={(e) => handleModelChange(key, e.target.value)}
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Select a model...</option>
+                      {models.map((model) => (
+                        <option key={model.name} value={model.name}>
+                          {model.name} ({(model.size / 1024 / 1024 / 1024).toFixed(1)}GB)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+
+                {/* Theme Settings */}
+                <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-700">
                   <div className="flex items-center space-x-3 mb-3">
-                    <span className="text-2xl">{info.icon}</span>
+                    <span className="text-2xl">🎨</span>
                     <div>
-                      <h3 className="font-semibold text-white">{info.name}</h3>
-                      <p className="text-sm text-slate-400">{info.description}</p>
+                      <h3 className="font-semibold text-white">Theme</h3>
+                      <p className="text-sm text-slate-400">Select your preferred theme</p>
                     </div>
                   </div>
-                  
                   <select
-                    value={localModels[key as keyof AgentModels] || ''}
-                    onChange={(e) => handleModelChange(key, e.target.value)}
+                    value={theme}
+                    onChange={(e) => setTheme(e.target.value as "light" | "dark" | "system")}
                     className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="">Select a model...</option>
-                    {models.map((model) => (
-                      <option key={model.name} value={model.name}>
-                        {model.name} ({(model.size / 1024 / 1024 / 1024).toFixed(1)}GB)
-                      </option>
-                    ))}
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="system">System</option>
                   </select>
                 </div>
-              ))}
-
-              {/* Theme Settings */}
-              <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-700 col-span-full">
-                <div className="flex items-center space-x-3 mb-3">
-                  <span className="text-2xl">🎨</span>
-                  <div>
-                    <h3 className="font-semibold text-white">Theme</h3>
-                    <p className="text-sm text-slate-400">Select your preferred theme</p>
-                  </div>
-                </div>
-                <select
-                  value={theme}
-                  onChange={(e) => setTheme(e.target.value as "light" | "dark" | "system")}
-                  className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="light">Light</option>
-                  <option value="dark">Dark</option>
-                  <option value="system">System</option>
-                </select>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Footer */}
