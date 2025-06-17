@@ -73,7 +73,13 @@ Provide your implementation below:`;
         .replace(/[<>:"|?*]/g, '_') // Replace invalid Windows characters
         .replace(/\\/g, '/'); // Normalize path separators
       
-      const fullPath = path.join(repoPath, sanitizedPath);
+      const fullPath = path.resolve(repoPath, sanitizedPath);
+      
+      // Validate that the resolved path is within the repository root
+      if (!fullPath.startsWith(repoPath)) {
+        throw new Error(`Invalid file path: ${sanitizedPath} resolves outside the repository root`);
+      }
+      
       const dirPath = path.dirname(fullPath);
       
       try {
