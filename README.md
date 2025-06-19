@@ -14,7 +14,7 @@ The new version now supports multiple tasks check it out here as all future work
 
 Our interaction generally follows this pattern:
 1.  **You Provide an Issue:** You will give Open Jules a task or problem to solve.
-2.  **I Create a Plan:** Open Jules will analyze the issue and propose a plan using `set_plan`.
+2.  **Create a Plan:** Open Jules will analyze the issue and propose a plan using `set_plan`.
 3.  **You Approve the Plan:** Open Jules will wait for your approval (using `request_user_input` and `record_user_approval_for_plan`) before proceeding. You can also provide feedback to Open Jules at this stage.
 4.  **Execute Step-by-Step:**
     - Open Jules will tackle one plan step at a time, often by calling `run_subtask`.
