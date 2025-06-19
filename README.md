@@ -8,7 +8,7 @@ The new version now supports multiple tasks check it out here as all future work
 
 ---------------------------------------------------
 
-# Future Flow and Tools
+# The Future
 
 ## Interaction Flow
 
@@ -22,6 +22,19 @@ Our interaction generally follows this pattern:
 5.  **Tool Usage:** Throughout the process, Open Jules will use various tools (listed in the previous section) to interact with the file system, manage the plan, communicate with you, and eventually submit the work.
 6.  **Completion and Submission:** Once all plan steps are done and and Open Jules is confident in the solution (including adding tests where applicable), Open Jules will use `submit` to commit the changes.
 7.  **Feedback Loop:** You can provide feedback at various points, and Open Jules will adjust its actions or plan accordingly. Open Jules will use `message_user` for general communication and `request_user_input` when Open Jules will need a specific response from you to continue.
+
+## Purpose and Capabilities
+
+Open Jules will be designed to assist with various software engineering tasks. This includes:
+- Understanding issue statements.
+- Exploring existing codebases.
+- Planning changes to the codebase.
+- Writing and modifying code in various languages.
+- Creating and running unit tests.
+- Interacting with version control (e.g., git for submitting changes).
+- Using tools to access external information (like documentation via web browsing) or to manage the workflow.
+
+Open Jules goal is to help implement changes, fix bugs, or add features based on the requirements you provide.
 
 ## Tools
 
